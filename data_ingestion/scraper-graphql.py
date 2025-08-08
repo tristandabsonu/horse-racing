@@ -3,7 +3,6 @@ import sqlite3
 import time
 import random
 from datetime import datetime, timedelta
-import math
 
 
 BASE = "https://puntapi.com/graphql-horse-racing"
@@ -226,10 +225,9 @@ def main(start_date, end_date):
 
 
 if __name__ == "__main__":
-    main(start_date="2024-08-28", end_date="2025-06-30")
+    main(start_date="2015-01-01", end_date="2025-06-30")
 
 
-# "2025-06-30"
 
 
 
@@ -243,7 +241,8 @@ r
 ---> 'group': name of the meeting for the group (Australia, International, Barrier Trials)
 ---> 'meetings': LIST of the meetings within each group
 
-SAMPLE
+
+SAMPLE 
 ----> {
         "id":"310010",
         "name":"Darwin",

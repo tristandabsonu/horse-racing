@@ -1,13 +1,3 @@
-GraphQL scraping errors
-Error on 2015-04-03 after 5 tries: 'Australia' group missing. Groups seen: ['International']
-Error on 2015-12-25 after 5 tries: 'Australia' group missing. Groups seen: []
-Error on 2016-03-25 after 5 tries: 'Australia' group missing. Groups seen: ['International']
-Error on 2016-12-25 after 5 tries: 'Australia' group missing. Groups seen: []
-Error on 2017-12-25 after 5 tries: 'Australia' group missing. Groups seen: []
-Error on 2018-12-25 after 5 tries: 'Australia' group missing. Groups seen: []
-Error on 2019-12-25 after 5 tries: 'Australia' group missing. Groups seen: []
-Error on 2020-12-25 after 5 tries: 'Australia' group missing. Groups seen: []
-Error on 2021-12-25 after 5 tries: 'Australia' group missing. Groups seen: []
-Error on 2022-12-25 after 5 tries: 'Australia' group missing. Groups seen: []
-Error on 2023-12-25 after 5 tries: 'Australia' group missing. Groups seen: ['International']
-Error on 2024-12-25 after 5 tries: 'Australia' group missing. Groups seen: ['International']
+Error on 2024-08-28: no such table: meetings
+Error on 2024-08-29: no such table: meetings
+Error on 2024-08-30: no such table: meetings
