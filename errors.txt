@@ -1,3 +1,0 @@
-Error on 2024-08-28: no such table: meetings
-Error on 2024-08-29: no such table: meetings
-Error on 2024-08-30: no such table: meetings
