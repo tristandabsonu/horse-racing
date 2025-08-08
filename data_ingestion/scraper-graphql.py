@@ -199,7 +199,9 @@ def daterange(start_date, end_date):
         yield start_date + timedelta(n)
 
 
-def main(start_date, end_date):
+def main(start_date=None, end_date="2025-06-30"):
+    if not start_date:
+        start_date = input("Enter a start date (YYYY-MM-DD) : ")
     start = datetime.strptime(start_date, "%Y-%m-%d")
     end = datetime.strptime(end_date, "%Y-%m-%d")
 
@@ -225,8 +227,9 @@ def main(start_date, end_date):
 
 
 if __name__ == "__main__":
-    main(start_date="2015-01-01", end_date="2025-06-30")
+    main()
 
+# start_date="2015-01-01", end_date="2025-06-30"
 
 
 

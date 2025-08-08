@@ -523,4 +523,6 @@ def main(start_date=None, end_date="2025-06-30"):
                 
             
 if __name__ == "__main__":
-    main(start_date="2015-01-01", end_date="2025-06-30")
+    main()
+
+# start_date="2015-01-01", end_date="2025-06-30"
