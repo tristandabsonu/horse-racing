@@ -327,11 +327,31 @@ def process_form(soup: BeautifulSoup) -> list[dict]:
         "Clockwise", "A-Clockwise", "Night", "Synthetic",
         "As Fav", "ROI $",
     ]
+    extras = {"Flucs": "", "All": "", "Dry": "", "Wet": "", "Starts": "",}
+
 
     for block in soup.select(".form-guide-full-form__selection"):
         # ignore scratched runners
         if block.select_one(".selection-details--scratched"):
             continue
+        
+        # --- grab All, Dry, Wet, Starts, Flucs from the top info block ---
+        info = block.select_one(".racing-full-form-text")
+        if info:
+            # <span><strong>Label:</strong> value</span>
+            for span in info.find_all("span"):
+                strong = span.find("strong")
+                if not strong:
+                    continue
+                label = strong.get_text(strip=True).rstrip(":")
+                text = span.get_text(" ", strip=True)
+
+                if label in ("All", "Dry", "Wet", "Starts"):
+                    # e.g. "All: 6%" -> "6%"
+                    extras[label] = text.split(":", 1)[1].strip() if ":" in text else ""
+                elif label.lower().startswith("flucs"):
+                    # e.g. "Flucs: $3.20, $4.20, ..."
+                    extras["Flucs"] = text.split(":", 1)[1].strip() if ":" in text else ""
 
         # horse name (strip running number “1.” etc.)
         name_tag = block.select_one(".selection-details__name strong")
@@ -351,7 +371,8 @@ def process_form(soup: BeautifulSoup) -> list[dict]:
         row = {"Name": name}
         for label in target_labels:
             row[label] = stats.get(label, "") 
-
+            
+        row.update(extras)
         results.append(row)
 
     return results
@@ -416,6 +437,7 @@ def extract_and_load_race(slug: str, meeting_id: str, race_id: str):
             meeting_id, race_id, finish_position, running_number, name,
             barrier, age, sex, trainer, jockey, weight, sire, dam,
             position_400m, position_800m, margin, sp,
+            flucs, sire_starts, sire_dry, sire_wet, sire_starts,
             form_letters, rating, last_race, best_win,
             career, last_10, prize, avg_earn, last_win,
             win_percent, place_percent, tj_win_percent, jh,
@@ -425,7 +447,7 @@ def extract_and_load_race(slug: str, meeting_id: str, race_id: str):
             group1, group2, group3, listed,
             clockwise, a_clockwise, night, synthetic,
             as_fav, roi
-        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
     """
 
     for h in combined:
@@ -446,6 +468,11 @@ def extract_and_load_race(slug: str, meeting_id: str, race_id: str):
             h.get("800m", ""),
             h.get("Margin", ""),
             h.get("SP", ""),
+            h.get("Flucs", ""), 
+            h.get("All", ""),
+            h.get("Dry", ""),
+            h.get("Wet", ""),
+            h.get("Starts", ""),
             h.get("FormLetters", ""),
             h.get("Rating", ""),
             h.get("LastRace", ""),
